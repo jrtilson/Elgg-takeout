@@ -25,7 +25,7 @@ then
 	sudo apt-get -y install mysql-server
 
 	# Install apache/php etc.
-	apt-get install vim apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl unzip imagemagick git-core -y
+	apt-get install vim apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl curl unzip imagemagick git-core -y
 	
 	# Enable modules
 	sudo a2enmod rewrite
