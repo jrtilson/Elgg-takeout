@@ -1,12 +1,13 @@
 <VirtualHost *:8080>
         ServerAdmin webmaster@localhost
+        ServerName 127.0.0.1
 
-        DocumentRoot /var/www
+        DocumentRoot /home/vagrant/elgg/current_root
         <Directory />
                 Options FollowSymLinks
                 AllowOverride None
         </Directory>
-        <Directory /var/www/>
+        <Directory /home/vagrant/elgg/current_root>
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All
                 Order allow,deny

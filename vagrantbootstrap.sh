@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
 VAGRANT_HOME="/home/vagrant"
+VAGRANT_SYNC='/vagrant'
 BOOTSTRAP_ROOT="$VAGRANT_HOME/.vagrantboostrap"
-
-ELGG_VERSION="1.8.14"
 
 # Make sure bootstrap root exists
 if [ ! -d $BOOTSTRAP_ROOT ];
@@ -46,33 +45,39 @@ fi
 # Elgg Install
 if [ ! -f "$BOOTSTRAP_ROOT/elgg" ];
 then
-
 	touch "$BOOTSTRAP_ROOT/elgg"
 
+	# Setup vars
+	ELGG_VERSION="1.8.14"
+	ELGG_NAME="1_8_14"
+
+	ELGG_ROOT=$VAGRANT_SYNC/elgg/elgg_$ELGG_NAME
+	ELGG_DATA_ROOT=$VAGRANT_HOME/elgg/data_$ELGG_NAME
+
 	# Checkout Elgg
-	git clone git://github.com/Elgg/Elgg.git $VAGRANT_HOME/elgg/current
+	git clone git://github.com/Elgg/Elgg.git $ELGG_ROOT
 	
 	# Get latest stable tag
-	cd $VAGRANT_HOME/elgg/current
+	cd $ELGG_ROOT
 	git checkout $ELGG_VERSION
 
 	# Set permissions on elgg directory
-	chown vagrant:vagrant -R $VAGRANT_HOME/elgg
+	chown vagrant:vagrant -R $VAGRANT_SYNC/elgg
 
 	# Create elgg data folder, set permissions
-	mkdir $VAGRANT_HOME/elgg/current_data
-	chown www-data:www-data -R $VAGRANT_HOME/elgg/current_data
+	mkdir $VAGRANT_HOME/elgg
+	mkdir $ELGG_DATA_ROOT
+	chown www-data:www-data -R $ELGG_DATA_ROOT
 
-	rm -rf /var/www
-	ln -s $VAGRANT_HOME/elgg/current /var/www
+	# symlink ELGG_ROOT to current_root
+	ln -s $ELGG_ROOT $VAGRANT_HOME/elgg/current_root
 
-	cp /vagrant/config_files/htaccess_dist $VAGRANT_HOME/elgg/current/.htaccess
-	cp /vagrant/config_files/settings.php $VAGRANT_HOME/elgg/current/engine/settings.php
+	cp /vagrant/config_files/htaccess_dist $ELGG_ROOT/.htaccess
+	cp /vagrant/config_files/settings.php $ELGG_ROOT/engine/settings.php
 	cp /vagrant/config_files/default /etc/apache2/sites-available/default
 
-	mysql -u root -proot <<< "CREATE DATABASE elgg_1_8_14;"
-	mysql -u root -proot elgg_1_8_14 < /vagrant/config_files/db.sql
+	mysql -u root -proot <<< "CREATE DATABASE elgg_$ELGG_NAME"
+	mysql -u root -proot elgg_$ELGG_NAME < /vagrant/config_files/db.sql
 
 	service apache2 reload
 fi
-

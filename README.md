@@ -19,18 +19,35 @@ The aim of this project is to create simple, zero-config, cross-platform [Elgg](
 
 5. Once Vagrant has finishished booting/configuring the vm, visit: [http://127.0.0.1:8080](http://127.0.0.1:8080) in your browser to check out your new Elgg test site!
 
-Admin credentials are: 
+
+#### Default Accounts 
+
+##### Elgg Admin
 
 **Username:**	admin  
 **Password:**	administrator
 
-Have fun!
+##### MySQL
+
+**Username:**	root  
+**Password:**	root
+
+### Development
+
+Once the Vagrant VM has booted, you'll find the Elgg files in the local elgg folder, ie: 
+
+	takeout/elgg/elgg_1_8_14
+
+This folder is symlinked in the Vagrant VM at: 
+
+	/home/vagrant/elgg/current_root
+
+Any changes you make in the local elgg folder will be synced to the VM. Develop away!
 
 ---
 
 #### Todo's
 
-- Make this a viable dev environment..
 - Chef Solo provisioning
 - SSL
 
