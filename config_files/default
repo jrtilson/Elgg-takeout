@@ -2,12 +2,12 @@
         ServerAdmin webmaster@localhost
         ServerName 127.0.0.1
 
-        DocumentRoot /home/vagrant/elgg/current_root
+        DocumentRoot /home/vagrant/elgg/elgg_root
         <Directory />
                 Options FollowSymLinks
                 AllowOverride None
         </Directory>
-        <Directory /home/vagrant/elgg/current_root>
+        <Directory /home/vagrant/elgg/elgg_root>
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride All
                 Order allow,deny

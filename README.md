@@ -36,11 +36,11 @@ The aim of this project is to create simple, zero-config, cross-platform [Elgg](
 
 Once the Vagrant VM has booted, you'll find the Elgg files in the local elgg folder, ie: 
 
-	takeout/elgg/elgg_1_8_14
+	takeout/elgg/
 
 This folder is symlinked in the Vagrant VM at: 
 
-	/home/vagrant/elgg/current_root
+	/home/vagrant/elgg/elgg_root
 
 Any changes you make in the local elgg folder will be synced to the VM. Develop away!
 
@@ -50,7 +50,7 @@ Any changes you make in the local elgg folder will be synced to the VM. Develop 
 
 - Chef Solo provisioning
 - SSL
-
+- Fix warnings in bootstrap script (apache2 and stdin junk)
 
 ---
 Jeff Tilson  

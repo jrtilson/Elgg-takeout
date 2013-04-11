@@ -35,10 +35,6 @@ then
 	sed 's/80/8080/' /etc/apache2/ports.conf 1> $VAGRANT_HOME/ports.conf
 	mv $VAGRANT_HOME/ports.conf /etc/apache2/ports.conf
 
-	# Change port in default site
-	# sed 's/80/8080/' /etc/apache2/sites-available/default 1> $VAGRANT_HOME/default
-	# mv $VAGRANT_HOME/default /etc/apache2/sites-available/default
-
 	service apache2 restart
 fi
 
@@ -49,10 +45,9 @@ then
 
 	# Setup vars
 	ELGG_VERSION="1.8.14"
-	ELGG_NAME="1_8_14"
 
-	ELGG_ROOT=$VAGRANT_SYNC/elgg/elgg_$ELGG_NAME
-	ELGG_DATA_ROOT=$VAGRANT_HOME/elgg/data_$ELGG_NAME
+	ELGG_ROOT=$VAGRANT_SYNC/elgg
+	ELGG_DATA_ROOT=$VAGRANT_HOME/elgg/elgg_data
 
 	# Checkout Elgg
 	git clone git://github.com/Elgg/Elgg.git $ELGG_ROOT
@@ -70,14 +65,26 @@ then
 	chown www-data:www-data -R $ELGG_DATA_ROOT
 
 	# symlink ELGG_ROOT to current_root
-	ln -s $ELGG_ROOT $VAGRANT_HOME/elgg/current_root
+	ln -s $ELGG_ROOT $VAGRANT_HOME/elgg/elgg_root
 
-	cp /vagrant/config_files/htaccess_dist $ELGG_ROOT/.htaccess
-	cp /vagrant/config_files/settings.php $ELGG_ROOT/engine/settings.php
 	cp /vagrant/config_files/default /etc/apache2/sites-available/default
 
-	mysql -u root -proot <<< "CREATE DATABASE elgg_$ELGG_NAME"
-	mysql -u root -proot elgg_$ELGG_NAME < /vagrant/config_files/db.sql
-
 	service apache2 reload
+
+	mysql -u root -proot <<< "CREATE DATABASE elgg"
+
+	php /vagrant/config_files/takeout_install.php
 fi
+
+echo "*************************************"
+echo "* Elgg Takeout: Bootstrap complete! *"
+echo "* --------------------------------- *"
+echo "*                                   *"
+echo "* Visit: http://127.0.0.1:8080      *"
+echo "*                                   *"
+echo "* Elgg Login:                       *"
+echo "* -----------                       *"
+echo "* Username: admin                   *"
+echo "* Password: administrator           *"
+echo "*                                   *"
+echo "*************************************"
