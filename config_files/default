@@ -1,3 +1,4 @@
+NameVirtualHost *:8080
 <VirtualHost *:8080>
         ServerAdmin webmaster@localhost
         ServerName 127.0.0.1

@@ -52,9 +52,5 @@ Any changes you make in the local elgg folder will be synced to the VM. Develop 
 - SSL
 - Bootstrap script: don't try to recreate elgg dir if it exists
 
-##### To Fix
-- Fix warnings in bootstrap script (apache2 and stdin junk)
-- Fix php notices from CLI script 
-
 ---
 Jeff Tilson  
