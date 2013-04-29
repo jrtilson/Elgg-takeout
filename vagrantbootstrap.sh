@@ -64,7 +64,7 @@ then
 	touch "$BOOTSTRAP_ROOT/elgg"
 
 	# Latest version, change this to whichever tag you want
-	ELGG_VERSION="1.8.14"
+	ELGG_VERSION="1.8.15"
 
 	# Elgg dirs
 	ELGG_ROOT=$VAGRANT_SYNC/elgg
