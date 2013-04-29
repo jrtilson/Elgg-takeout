@@ -34,13 +34,18 @@ then
 	# Update first
 	sudo apt-get update 2>/dev/null
 
+	# Need to get latest git release (http://adammonsen.com/post/665)
+	sudo apt-get install python-software-properties -y 2>/dev/null
+	sudo add-apt-repository ppa:git-core/ppa -y 2>/dev/null
+	sudo apt-get update 2>/dev/null
+
 	# MySQL set root pwd
 	sudo debconf-set-selections <<< 'mysql-server-5.5  mysql-server/root_password password root'
 	sudo debconf-set-selections <<< 'mysql-server-5.5  mysql-server/root_password_again password root'
 	sudo apt-get -y install mysql-server 2>/dev/null
 
 	# Install apache/php etc.
-	apt-get install vim apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl curl unzip imagemagick git-core -y 2>/dev/null
+	apt-get install vim apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl curl unzip imagemagick git -y 2>/dev/null
 	
 	# Fix ServerName Errors
 	echo ServerName $HOSTNAME > /etc/apache2/conf.d/fqdn
@@ -63,7 +68,8 @@ if [ ! -f "$BOOTSTRAP_ROOT/elgg" ];
 then
 	touch "$BOOTSTRAP_ROOT/elgg"
 
-	# Latest version, change this to whichever tag you want
+	# Latest version, change this to whichever branch/tag you want
+	ELGG_BRANCH="1.8"
 	ELGG_VERSION="1.8.15"
 
 	# Elgg dirs
@@ -74,7 +80,7 @@ then
 	if [ ! -d "$ELGG_ROOT" ];
 	then
 		# Checkout Elgg
-		git clone git://github.com/Elgg/Elgg.git $ELGG_ROOT
+		git clone -b $ELGG_BRANCH --single-branch git://github.com/Elgg/Elgg.git $ELGG_ROOT
 		
 		# Get latest stable tag 
 		cd $ELGG_ROOT               # Comment out for master
