@@ -45,7 +45,7 @@ then
 	sudo apt-get -y install mysql-server 2>/dev/null
 
 	# Install apache/php etc.
-	apt-get install vim apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl curl unzip imagemagick git -y 2>/dev/null
+	apt-get install vim apache2 php5 libapache2-mod-php5 php5-mysql php5-gd php5-curl curl unzip imagemagick git php-apc -y 2>/dev/null
 	
 	# Fix ServerName Errors
 	echo ServerName $HOSTNAME > /etc/apache2/conf.d/fqdn
@@ -70,7 +70,7 @@ then
 
 	# Latest version, change this to whichever branch/tag you want
 	ELGG_BRANCH="1.8"
-	ELGG_VERSION="1.8.15"
+	ELGG_VERSION="1.8.16"
 
 	# Elgg dirs
 	ELGG_ROOT=$VAGRANT_SYNC/elgg
@@ -99,6 +99,9 @@ then
 	ln -s $ELGG_ROOT $VAGRANT_HOME/elgg/elgg_root
 
 	cp /vagrant/config_files/default /etc/apache2/sites-available/default
+
+	# make a super useful phpinfo file
+	echo "<?php echo phpinfo(); ?>" > $VAGRANT_HOME/elgg/elgg_root/phpinfo.php
 
 	service apache2 reload
 

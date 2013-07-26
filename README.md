@@ -50,7 +50,6 @@ Any changes you make in the local elgg folder will be synced to the VM. Develop 
 
 - Chef Solo provisioning
 - SSL
-- Bootstrap script: don't try to recreate elgg dir if it exists
 
 ---
 Jeff Tilson  
