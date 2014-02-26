@@ -80,7 +80,7 @@ then
 	if [ ! -d "$ELGG_ROOT" ];
 	then
 		# Checkout Elgg
-		#git clone -b $ELGG_BRANCH --single-branch git://github.com/Elgg/Elgg.git $ELGG_ROOT
+		git clone -b $ELGG_BRANCH --single-branch git://github.com/Elgg/Elgg.git $ELGG_ROOT
 		git clone git://github.com/Elgg/Elgg.git $ELGG_ROOT
 		
 		# Get latest stable tag 
