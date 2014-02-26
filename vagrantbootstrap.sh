@@ -70,7 +70,7 @@ then
 
 	# Latest version, change this to whichever branch/tag you want
 	ELGG_BRANCH="1.8"
-	ELGG_VERSION="1.8.16"
+	ELGG_VERSION="1.8.18"
 
 	# Elgg dirs
 	ELGG_ROOT=$VAGRANT_SYNC/elgg
@@ -80,11 +80,13 @@ then
 	if [ ! -d "$ELGG_ROOT" ];
 	then
 		# Checkout Elgg
-		git clone -b $ELGG_BRANCH --single-branch git://github.com/Elgg/Elgg.git $ELGG_ROOT
+		#git clone -b $ELGG_BRANCH --single-branch git://github.com/Elgg/Elgg.git $ELGG_ROOT
+		git clone git://github.com/Elgg/Elgg.git $ELGG_ROOT
 		
 		# Get latest stable tag 
 		cd $ELGG_ROOT               # Comment out for master
-		git checkout $ELGG_VERSION  # Comment out for master
+		
+		#git checkout $ELGG_VERSION  # Comment out for master
 	fi
 
 	# Set permissions on elgg directory
