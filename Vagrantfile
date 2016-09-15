@@ -7,7 +7,7 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "precise64"
+  config.vm.box = "trusty64" # NOTE: You'll need to set this up in vagrant first
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
