@@ -5,17 +5,11 @@
  * Sets up Elgg DB and creates settings files (settings.php and .htaccess)
  */
 
-if (PHP_SAPI !== 'cli') {
-	echo "You must use the command line to run this script.";
-	exit;
-}
-
 // Suppress notices
 ini_set('error_reporting',E_ALL ^ E_NOTICE);
 
-require_once(dirname(dirname(__FILE__)) . "/elgg/install/ElggInstaller.php");
-
-$installer = new ElggInstaller();
+// change to true to run this script. Change back to false when done.
+$enabled = true;
 
 // none of the following may be empty
 $params = array(
@@ -37,7 +31,27 @@ $params = array(
 	'password' => 'administrator',
 );
 
+
+// Do not edit below this line. //////////////////////////////
+
+
+if (!$enabled) {
+	echo "To enable this script, change \$enabled to true.\n";
+	echo "You *must* disable this script after a successful installation.\n";
+	exit;
+}
+
+if (PHP_SAPI !== 'cli') {
+	echo "You must use the command line to run this script.";
+	exit;
+}
+
+require_once dirname(dirname(__FILE__)) . "/elgg/autoloader.php";
+
+$installer = new ElggInstaller();
+
 // install and create the .htaccess file
 $installer->batchInstall($params, TRUE);
 
-// at this point installation has completed (otherwise an exception halted execution).
+echo "\nWarning: You *must* disable this script by setting \$enabled = false;.\n";
+echo "Leaving this script enabled could endanger your installation.\n";

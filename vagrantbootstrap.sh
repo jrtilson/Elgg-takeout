@@ -69,8 +69,8 @@ then
 	touch "$BOOTSTRAP_ROOT/elgg"
 
 	# Latest version, change this to whichever branch/tag you want
-	ELGG_BRANCH="1.8"
-	ELGG_VERSION="1.8.18"
+	#ELGG_BRANCH="2.x"
+	#ELGG_VERSION="2.2.0"
 
 	# Elgg dirs
 	ELGG_ROOT=$VAGRANT_SYNC/elgg
@@ -80,17 +80,18 @@ then
 	if [ ! -d "$ELGG_ROOT" ];
 	then
 		# Checkout Elgg
-		git clone -b $ELGG_BRANCH --single-branch git://github.com/Elgg/Elgg.git $ELGG_ROOT
+		#git clone -b $ELGG_BRANCH --single-branch git://github.com/Elgg/Elgg.git $ELGG_ROOT
 		git clone git://github.com/Elgg/Elgg.git $ELGG_ROOT
 		
 		# Get latest stable tag 
-		cd $ELGG_ROOT               # Comment out for master
+		cd $ELGG_ROOT               
 		
 		#git checkout $ELGG_VERSION  # Comment out for master
 	fi
 
 	# Set permissions on elgg directory
 	chown vagrant:vagrant -R $VAGRANT_SYNC/elgg
+	chmod 777 -R $VAGRANT_SYNC/elgg 
 
 	# Create elgg data folder, set permissions
 	mkdir $VAGRANT_HOME/elgg
@@ -100,7 +101,7 @@ then
 	# symlink ELGG_ROOT to current_root
 	ln -s $ELGG_ROOT $VAGRANT_HOME/elgg/elgg_root
 
-	cp /vagrant/config_files/default /etc/apache2/sites-available/default
+	cp /vagrant/config_files/default.conf /etc/apache2/sites-available/000-default.conf
 
 	# make a super useful phpinfo file
 	echo "<?php echo phpinfo(); ?>" > $VAGRANT_HOME/elgg/elgg_root/phpinfo.php
@@ -109,7 +110,17 @@ then
 
 	mysql -u root -proot <<< "CREATE DATABASE elgg"
 
+	# composer 
+	cd $ELGG_ROOT
+	curl -s http://getcomposer.org/installer | php
+	cp composer.phar /usr/local/bin/composer
+	composer global require fxp/composer-asset-plugin
+	php composer.phar install
+
+	# Run install
+	chmod 777 -R $ELGG_ROOT
 	php /vagrant/config_files/takeout_install.php
+
 fi
 
 echo "*************************************"
